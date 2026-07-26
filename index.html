@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSCS Practice Exam</title>
+    <meta name="description"
+        content="Interactive practice exam for the NSCA Certified Strength and Conditioning Specialist (CSCS) certification with instant scoring and domain-level feedback">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.5 6.5L2 11L4 13L6 11L11 16L9 18L11 20L15.5 15.5"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M14.5 4.5L20 10L18 12L13 7L14.5 4.5Z" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M17 3L21 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            <path d="M3 17L7 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="logo-text">
+                        <h1>CSCS Practice Exam</h1>
+                        <p>Certified Strength and Conditioning Specialist</p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="timer-display" id="timerDisplay">
+                        <span class="timer-icon">⏱️</span>
+                        <span id="timerText">00:00</span>
+                    </div>
+                    <div class="progress-indicator" id="progressIndicator">
+                        <span class="progress-text">Ready to start</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Welcome Screen -->
+            <div class="screen active" id="welcomeScreen">
+                <div class="welcome-card">
+                    <div class="welcome-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h2>Welcome to Your Practice Exam</h2>
+                    <p class="welcome-description" id="welcomeDescription">Test your knowledge with original practice
+                        questions built from the official CSCS Detailed Content Outline. Answer each question and
+                        receive instant, itemized feedback on your performance.</p>
+
+                    <div class="educational-content">
+                        <div class="edu-card">
+                            <h4>About the CSCS Exam</h4>
+                            <p>The CSCS exam is built around a Detailed Content Outline (DCO) covering two sections:
+                                Scientific Foundations and Practical/Applied. Each section must be passed
+                                independently.</p>
+                        </div>
+                        <div class="edu-grid" id="eduGrid">
+                            <div class="edu-item">
+                                <span>7</span>
+                                <p>DCO Domains</p>
+                            </div>
+                            <div class="edu-item">
+                                <span>3</span>
+                                <p>Cognitive Levels</p>
+                            </div>
+                            <div class="edu-item">
+                                <span>220</span>
+                                <p>Practice Questions</p>
+                            </div>
+                            <div class="edu-item">
+                                <span>67.5%</span>
+                                <p>Passing Score</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="exam-selector-container">
+                        <label for="examSelect" class="exam-select-label">Select Practice Mode:</label>
+                        <div class="select-wrapper">
+                            <select id="examSelect" class="exam-select">
+                                <option value="full">Full Exam (Scientific Foundations + Practical/Applied)</option>
+                                <option value="scientific-foundations">Scientific Foundations only (95 questions)
+                                </option>
+                                <option value="practical-applied">Practical/Applied only (125 questions)</option>
+                            </select>
+                            <svg class="select-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">📝</div>
+                            <div class="stat-value" id="totalQuestions">--</div>
+                            <div class="stat-label">Questions</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⏱️</div>
+                            <div class="stat-value" id="timeLimitDisplay">--</div>
+                            <div class="stat-label">Time Limit</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🎯</div>
+                            <div class="stat-value">67.5%</div>
+                            <div class="stat-label">To Pass (per section)</div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-large" id="startQuizBtn">
+                        <span>Start Exam</span>
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Screen -->
+            <div class="screen" id="quizScreen">
+                <div class="section-banner">
+                    <div>
+                        <div class="section-name" id="sectionBannerName">Scientific Foundations</div>
+                        <div class="section-sub" id="sectionBannerSub">Section 1 of 1</div>
+                    </div>
+                    <span class="section-badge" id="sectionBannerBadge">In Progress</span>
+                </div>
+                <div class="quiz-container">
+                    <div class="question-card">
+                        <div class="question-header">
+                            <span class="question-number" id="questionNumber">Question 1 of 40</span>
+                            <span class="question-domain-tag" id="questionDomainTag">Domain</span>
+                            <div class="question-progress-bar">
+                                <div class="question-progress-fill" id="questionProgressFill"></div>
+                            </div>
+                        </div>
+
+                        <div class="question-content">
+                            <h3 class="question-text" id="questionText">Loading question...</h3>
+
+                            <div class="options-container" id="optionsContainer">
+                                <!-- Options will be dynamically inserted -->
+                            </div>
+                        </div>
+
+                        <div class="question-actions">
+                            <button class="btn btn-secondary" id="prevBtn" disabled>
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <span>Previous</span>
+                            </button>
+                            <button class="btn btn-primary" id="nextBtn" disabled>
+                                <span>Next Question</span>
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                            <button class="btn btn-success" id="submitBtn" style="display: none;">
+                                <span>Submit Section</span>
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M21 12V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H16"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-sidebar">
+                        <h4>Question Navigator</h4>
+                        <div class="question-grid" id="questionGrid">
+                            <!-- Question navigation buttons will be dynamically inserted -->
+                        </div>
+                        <div class="legend">
+                            <div class="legend-item">
+                                <span class="legend-dot answered"></span>
+                                <span>Answered</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-dot current"></span>
+                                <span>Current</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-dot unanswered"></span>
+                                <span>Unanswered</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Screen -->
+            <div class="screen" id="resultsScreen">
+                <div id="resultsContent">
+                    <!-- Populated dynamically: one .results-card per section, plus an overall summary for Full Exam mode -->
+                </div>
+                <div class="results-actions">
+                    <button class="btn btn-secondary btn-large" id="reviewBtn">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 12S5 4 12 4S23 12 23 12S19 20 12 20S1 12 1 12Z" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" />
+                        </svg>
+                        <span>Review Answers</span>
+                    </button>
+                    <button class="btn btn-primary btn-large" id="retakeBtn">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 4V10H7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M23 20V14H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M20.49 9C19.9828 7.56678 19.1209 6.28536 17.9845 5.27542C16.8482 4.26548 15.4745 3.55976 13.9917 3.22426C12.5089 2.88875 10.9652 2.93434 9.50481 3.35677C8.04437 3.77921 6.71475 4.56471 5.64 5.64L1 10M23 14L18.36 18.36C17.2853 19.4353 15.9556 20.2208 14.4952 20.6432C13.0348 21.0657 11.4911 21.1112 10.0083 20.7757C8.52547 20.4402 7.1518 19.7345 6.01547 18.7246C4.87913 17.7146 4.01717 16.4332 3.51 15"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        <span>Retake</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- About Screen -->
+            <div class="screen" id="aboutScreen">
+                <div class="info-card">
+                    <h2>About This Practice Exam</h2>
+                    <p>This is an independent study tool built to help candidates prepare for the NSCA Certified
+                        Strength and Conditioning Specialist (CSCS) exam.</p>
+
+                    <div class="expertise-section">
+                        <h3>Content Source</h3>
+                        <p>Questions are original practice content authored to match the domains, subtopics, and
+                            cognitive-level (Recall / Application / Analysis) weightings published in the CSCS
+                            Detailed Content Outline (DCO), effective July 1, 2025, and styled after the sample
+                            questions included in that outline.</p>
+                    </div>
+
+                    <div class="disclaimer-box">
+                        <strong>Disclaimer:</strong> This tool is not affiliated with, endorsed by, or produced by the
+                        National Strength and Conditioning Association (NSCA). "CSCS" and "NSCA" are marks of their
+                        respective owner. All questions here are independently authored practice content and are not
+                        real exam items. The 67.5% passing threshold shown is a study benchmark chosen for this tool,
+                        not an official published NSCA cut score. Completing this practice exam does not guarantee
+                        success on the real CSCS examination.
+                    </div>
+                    <button class="btn btn-secondary" style="margin-top: 1.5rem;"
+                        onclick="window.location.hash = 'welcome'">Back to Exam</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-links">
+                <a href="#about">About</a>
+            </div>
+            <p>CSCS Practice Exam &mdash; original content based on the CSCS Detailed Content Outline</p>
+            <p class="copyright">Not affiliated with or endorsed by the NSCA.</p>
+        </footer>
+    </div>
+
+    <script src="data/scientific-foundations-questions.js"></script>
+    <script src="data/practical-applied-questions.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
