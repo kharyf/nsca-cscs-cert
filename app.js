@@ -8,18 +8,40 @@
 const PASSING_SCORE = 67.5;
 const SECONDS_PER_QUESTION = 60; // 1 minute per question, matching typical MC exam pacing
 
-const SECTIONS = {
-    'scientific-foundations': {
-        title: 'Scientific Foundations',
-        domains: ['Exercise Sciences', 'Sport Psychology', 'Nutrition'],
-        get questions() { return SF_QUESTIONS; }
+const EXAMS = {
+    exam1: {
+        title: 'Exam 1',
+        sections: {
+            'scientific-foundations': {
+                title: 'Scientific Foundations',
+                domains: ['Exercise Sciences', 'Sport Psychology', 'Nutrition'],
+                get questions() { return SF_QUESTIONS; }
+            },
+            'practical-applied': {
+                title: 'Practical/Applied',
+                domains: ['Program Design', 'Exercise Technique', 'Program Implementation', 'Organization and Administration'],
+                get questions() { return PA_QUESTIONS; }
+            }
+        }
     },
-    'practical-applied': {
-        title: 'Practical/Applied',
-        domains: ['Program Design', 'Exercise Technique', 'Program Implementation', 'Organization and Administration'],
-        get questions() { return PA_QUESTIONS; }
+    exam2: {
+        title: 'Exam 2 (Advanced)',
+        sections: {
+            'scientific-foundations': {
+                title: 'Scientific Foundations',
+                domains: ['Exercise Sciences', 'Sport Psychology', 'Nutrition'],
+                get questions() { return SF2_QUESTIONS; }
+            },
+            'practical-applied': {
+                title: 'Practical/Applied',
+                domains: ['Program Design', 'Exercise Technique', 'Program Implementation', 'Organization and Administration'],
+                get questions() { return PA2_QUESTIONS; }
+            }
+        }
     }
 };
+
+function currentSections() { return EXAMS[state.examId].sections; }
 
 const MODES = {
     full: {
@@ -40,6 +62,7 @@ const MODES = {
 // Application State
 // ===================================
 const state = {
+    examId: 'exam1',
     modeId: 'full',
     sectionIds: [],           // ordered list of section ids for this run
     sectionIndex: 0,          // which section (in sectionIds) is currently active
@@ -81,7 +104,8 @@ const elements = {
     resultsContent: document.getElementById('resultsContent'),
     reviewBtn: document.getElementById('reviewBtn'),
     retakeBtn: document.getElementById('retakeBtn'),
-    examSelect: document.getElementById('examSelect')
+    examSelect: document.getElementById('examSelect'),
+    examBankSelect: document.getElementById('examBankSelect')
 };
 
 // ===================================
@@ -97,7 +121,7 @@ function formatMinutes(totalMinutes) {
 
 function updateWelcomeStats() {
     const mode = MODES[state.modeId];
-    const totalQuestions = mode.sectionIds.reduce((sum, id) => sum + SECTIONS[id].questions.length, 0);
+    const totalQuestions = mode.sectionIds.reduce((sum, id) => sum + currentSections()[id].questions.length, 0);
     const totalMinutes = Math.round((totalQuestions * SECONDS_PER_QUESTION) / 60);
 
     elements.totalQuestions.textContent = totalQuestions;
@@ -106,6 +130,11 @@ function updateWelcomeStats() {
 
 function handleModeChange(e) {
     state.modeId = e.target.value;
+    updateWelcomeStats();
+}
+
+function handleExamChange(e) {
+    state.examId = e.target.value;
     updateWelcomeStats();
 }
 
@@ -186,7 +215,7 @@ function startQuiz() {
 
 function startSection() {
     const sectionId = state.sectionIds[state.sectionIndex];
-    const section = SECTIONS[sectionId];
+    const section = currentSections()[sectionId];
 
     state.questions = section.questions;
     state.userAnswers = {};
@@ -392,7 +421,7 @@ function computeSectionResult(sectionId, questions, userAnswers) {
 
     return {
         sectionId,
-        title: SECTIONS[sectionId].title,
+        title: currentSections()[sectionId].title,
         questions,
         userAnswers: Object.assign({}, userAnswers),
         correctCount,
@@ -569,6 +598,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 window.addEventListener('hashchange', handleHashChange);
 elements.examSelect.addEventListener('change', handleModeChange);
+elements.examBankSelect.addEventListener('change', handleExamChange);
 elements.startQuizBtn.addEventListener('click', startQuiz);
 elements.prevBtn.addEventListener('click', previousQuestion);
 elements.nextBtn.addEventListener('click', nextQuestion);

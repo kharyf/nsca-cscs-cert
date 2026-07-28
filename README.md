@@ -4,8 +4,9 @@ A local, single-page practice exam for the NSCA Certified Strength and Condition
 
 ## Features
 
-- **220 original practice questions** (95 Scientific Foundations + 125 Practical/Applied), 3-option single-best-answer format matching the real CSCS exam style
-- **Three practice modes**: Full Exam (both sections back-to-back), Scientific Foundations only, or Practical/Applied only
+- **440 original practice questions across two full-length exams** — Exam 1 (95 Scientific Foundations + 125 Practical/Applied, standard difficulty) and Exam 2 (95 Scientific Foundations + 125 Practical/Applied, expert-level difficulty), each in the same 3-option single-best-answer format matching the real CSCS exam style
+- **Exam selector**: choose Exam 1 (standard) or Exam 2 (advanced — heavily Application/Analysis items with tightly-clustered, closely related answer options that only strong domain knowledge can reliably distinguish)
+- **Three practice modes per exam**: Full Exam (both sections back-to-back), Scientific Foundations only, or Practical/Applied only
 - **Live per-section countdown timer** that auto-submits when time runs out
 - **Independent pass/fail per section** at a 67.5% passing line, matching how the real exam gates both sections separately
 - **Itemized results**: score by DCO domain (e.g., Exercise Sciences, Program Design) and by cognitive level (Recall / Application / Analysis)
@@ -31,16 +32,18 @@ Serves the app at `http://localhost:3000` and opens it in your browser; edits to
 ```
 index.html      Screens: welcome, quiz, results, about
 index.css        Design system and styling (dark theme)
-app.js           Quiz engine: timers, sections, scoring, results rendering
+app.js           Quiz engine: timers, exams, sections, scoring, results rendering
 data/
-  scientific-foundations-questions.js   95 questions (Exercise Sciences, Sport Psychology, Nutrition)
-  practical-applied-questions.js        125 questions (Program Design, Exercise Technique,
-                                          Program Implementation, Organization and Administration)
+  scientific-foundations-questions.js     95 questions (Exam 1 — Exercise Sciences, Sport Psychology, Nutrition)
+  practical-applied-questions.js          125 questions (Exam 1 — Program Design, Exercise Technique,
+                                            Program Implementation, Organization and Administration)
+  scientific-foundations-2-questions.js   95 questions (Exam 2, advanced — same domains as Exam 1)
+  practical-applied-2-questions.js        125 questions (Exam 2, advanced — same domains as Exam 1)
 certified-strength-and-conditioning-specialist-job-task-analysis-summary-2025.pdf
                  Source CSCS Detailed Content Outline the question bank is built from
 ```
 
-Each question object carries `domain`, `topic`, and `cognitiveLevel` fields, which is what drives the itemized results breakdown — see any file in `data/` for the schema.
+Each question object carries `domain`, `topic`, and `cognitiveLevel` fields, which is what drives the itemized results breakdown — same schema across all four data files, see any file in `data/` for the fields.
 
 ## Disclaimer
 

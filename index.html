@@ -66,7 +66,8 @@
                     <h2>Welcome to Your Practice Exam</h2>
                     <p class="welcome-description" id="welcomeDescription">Test your knowledge with original practice
                         questions built from the official CSCS Detailed Content Outline. Answer each question and
-                        receive instant, itemized feedback on your performance.</p>
+                        receive instant, itemized feedback on your performance. Choose between the standard Exam 1
+                        or the expert-level Exam 2 for a tougher challenge.</p>
 
                     <div class="educational-content">
                         <div class="edu-card">
@@ -86,12 +87,26 @@
                             </div>
                             <div class="edu-item">
                                 <span>220</span>
-                                <p>Practice Questions</p>
+                                <p>Questions per Exam</p>
                             </div>
                             <div class="edu-item">
                                 <span>67.5%</span>
                                 <p>Passing Score</p>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="exam-selector-container">
+                        <label for="examBankSelect" class="exam-select-label">Select Exam:</label>
+                        <div class="select-wrapper">
+                            <select id="examBankSelect" class="exam-select">
+                                <option value="exam1">Exam 1 (Standard)</option>
+                                <option value="exam2">Exam 2 (Advanced — Expert Level)</option>
+                            </select>
+                            <svg class="select-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
                         </div>
                     </div>
 
@@ -261,6 +276,10 @@
                             cognitive-level (Recall / Application / Analysis) weightings published in the CSCS
                             Detailed Content Outline (DCO), effective July 1, 2025, and styled after the sample
                             questions included in that outline.</p>
+                        <p>Exam 2 covers the same DCO domains and topics as Exam 1, but is intentionally written at a
+                            much higher difficulty: it leans heavily toward Application- and Analysis-level items and
+                            uses closely related, tightly-clustered answer options, so surface-level elimination
+                            rarely works and only strong domain knowledge reliably identifies the correct answer.</p>
                     </div>
 
                     <div class="disclaimer-box">
@@ -289,6 +308,8 @@
 
     <script src="data/scientific-foundations-questions.js"></script>
     <script src="data/practical-applied-questions.js"></script>
+    <script src="data/scientific-foundations-2-questions.js"></script>
+    <script src="data/practical-applied-2-questions.js"></script>
     <script src="app.js"></script>
 </body>
 
