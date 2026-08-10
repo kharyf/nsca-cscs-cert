@@ -38,6 +38,21 @@ const EXAMS = {
                 get questions() { return PA2_QUESTIONS; }
             }
         }
+    },
+    exam3: {
+        title: 'Exam 3 (Expert)',
+        sections: {
+            'scientific-foundations': {
+                title: 'Scientific Foundations',
+                domains: ['Exercise Sciences', 'Sport Psychology', 'Nutrition'],
+                get questions() { return SF3_QUESTIONS; }
+            },
+            'practical-applied': {
+                title: 'Practical/Applied',
+                domains: ['Program Design', 'Exercise Technique', 'Program Implementation', 'Organization and Administration'],
+                get questions() { return PA3_QUESTIONS; }
+            }
+        }
     }
 };
 
@@ -102,7 +117,6 @@ const elements = {
     nextBtn: document.getElementById('nextBtn'),
     submitBtn: document.getElementById('submitBtn'),
     resultsContent: document.getElementById('resultsContent'),
-    reviewBtn: document.getElementById('reviewBtn'),
     retakeBtn: document.getElementById('retakeBtn'),
     examSelect: document.getElementById('examSelect'),
     examBankSelect: document.getElementById('examBankSelect')
@@ -481,7 +495,17 @@ function buildSectionResultCard(result) {
         <div class="results-section-block">
             <div class="results-section-header">
                 <h3>${result.title}</h3>
-                <span class="pass-badge ${result.passed ? 'pass' : 'fail'}">${result.passed ? '✓ Passed' : '✗ Not Passed'}</span>
+                <div class="results-header-actions">
+                    <span class="pass-badge ${result.passed ? 'pass' : 'fail'}">${result.passed ? '✓ Passed' : '✗ Not Passed'}</span>
+                    <button class="btn btn-secondary btn-small review-section-btn" type="button">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 12S5 4 12 4S23 12 23 12S19 20 12 20S1 12 1 12Z" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" />
+                        </svg>
+                        <span>Review Answers</span>
+                    </button>
+                </div>
             </div>
             <div class="results-body">
                 <div class="score-display">
@@ -535,6 +559,7 @@ function buildSectionResultCard(result) {
             </div>
         </div>
     `;
+    card.querySelector('.review-section-btn').addEventListener('click', () => reviewAnswers(result.sectionId));
     return card;
 }
 
@@ -565,10 +590,25 @@ function buildOverallSummaryCard() {
     return card;
 }
 
-function reviewAnswers() {
-    // Review the last-submitted section (the one currently loaded in state.questions).
+function reviewAnswers(sectionId) {
+    const result = state.sectionResults[sectionId];
+
+    state.sectionIndex = state.sectionIds.indexOf(sectionId);
+    state.questions = result.questions;
+    state.userAnswers = Object.assign({}, result.userAnswers);
+    state.currentQuestionIndex = 0;
+    state.quizStarted = true;
+    state.quizCompleted = true;
+
+    elements.sectionBannerName.textContent = result.title;
+    elements.sectionBannerSub.textContent = `Section ${state.sectionIndex + 1} of ${state.sectionIds.length}`;
+    elements.sectionBannerBadge.textContent = 'Submitted';
+    elements.submitBtn.querySelector('span').textContent = 'Back to Results';
+
+    buildQuestionNavigator();
     window.location.hash = 'quiz';
     displayQuestion(0);
+    updateProgressIndicator();
 }
 
 function showAnswerFeedback(question) {
@@ -603,5 +643,4 @@ elements.startQuizBtn.addEventListener('click', startQuiz);
 elements.prevBtn.addEventListener('click', previousQuestion);
 elements.nextBtn.addEventListener('click', nextQuestion);
 elements.submitBtn.addEventListener('click', handlePrimaryAdvance);
-elements.reviewBtn.addEventListener('click', reviewAnswers);
 elements.retakeBtn.addEventListener('click', retakeQuiz);

@@ -4,8 +4,8 @@ A local, single-page practice exam for the NSCA Certified Strength and Condition
 
 ## Features
 
-- **440 original practice questions across two full-length exams** — Exam 1 (95 Scientific Foundations + 125 Practical/Applied, standard difficulty) and Exam 2 (95 Scientific Foundations + 125 Practical/Applied, expert-level difficulty), each in the same 3-option single-best-answer format matching the real CSCS exam style
-- **Exam selector**: choose Exam 1 (standard) or Exam 2 (advanced — heavily Application/Analysis items with tightly-clustered, closely related answer options that only strong domain knowledge can reliably distinguish)
+- **660 original practice questions across three full-length exams** — Exam 1 (95 Scientific Foundations + 125 Practical/Applied, standard difficulty), Exam 2 (95 + 125, expert-level difficulty), and Exam 3 (95 + 125, hardest — see below), each in the same 3-option single-best-answer format matching the real CSCS exam style
+- **Exam selector**: choose Exam 1 (standard), Exam 2 (advanced — heavily Application/Analysis items with tightly-clustered, closely related answer options that only strong domain knowledge can reliably distinguish), or Exam 3 (expert — pushes the same levers further: an even higher share of Analysis-level items, more multi-step scenarios that combine two DCO subareas per question, "least accurate / the exception" framing, and calculation items (Karvonen/HRR, volume-load/tonnage). Exam 3 also adds dedicated coverage for DCO areas Exam 1/2 never gave their own topic — e.g. individual/biological differences (age, training age, sex), the PICOT research framework, and evidence-based vs. fad body-composition approaches — in place of some of the most-repeated topics from Exam 1/2
 - **Three practice modes per exam**: Full Exam (both sections back-to-back), Scientific Foundations only, or Practical/Applied only
 - **Live per-section countdown timer** that auto-submits when time runs out
 - **Independent pass/fail per section** at a 67.5% passing line, matching how the real exam gates both sections separately
@@ -39,11 +39,13 @@ data/
                                             Program Implementation, Organization and Administration)
   scientific-foundations-2-questions.js   95 questions (Exam 2, advanced — same domains as Exam 1)
   practical-applied-2-questions.js        125 questions (Exam 2, advanced — same domains as Exam 1)
+  scientific-foundations-3-questions.js   95 questions (Exam 3, expert — same domains, hardest difficulty)
+  practical-applied-3-questions.js        125 questions (Exam 3, expert — same domains, hardest difficulty)
 certified-strength-and-conditioning-specialist-job-task-analysis-summary-2025.pdf
                  Source CSCS Detailed Content Outline the question bank is built from
 ```
 
-Each question object carries `domain`, `topic`, and `cognitiveLevel` fields, which is what drives the itemized results breakdown — same schema across all four data files, see any file in `data/` for the fields.
+Each question object carries `domain`, `topic`, and `cognitiveLevel` fields, which is what drives the itemized results breakdown — same schema across all six data files, see any file in `data/` for the fields.
 
 ## Disclaimer
 
